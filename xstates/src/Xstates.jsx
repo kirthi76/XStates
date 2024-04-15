@@ -40,8 +40,8 @@ const Xstates = () => {
   return (
     <div>
        <h1>Select Location</h1>
-      <select id="country" onChange={(e) => handleCountrySelection(e.target.value)}>
-        <option value="">Select a country</option>
+      <select onChange={(e) => handleCountrySelection(e.target.value)}>
+        <option>Select a country</option>
         {countries.map((country) => (
           <option key={country} value={country}>
             {country}
@@ -50,8 +50,8 @@ const Xstates = () => {
       </select>
 
     
-      <select id="state" onChange={(e) => handleStateSelection(e.target.value)}>
-        <option value="">Select a state</option>
+      <select  onChange={(e) => handleStateSelection(e.target.value)}>
+        <option>Select a state</option>
         {states.map((state) => (
           <option key={state} value={state}>
             {state}
@@ -60,18 +60,14 @@ const Xstates = () => {
       </select>
 
       
-      <select id="city" onChange={(e) => handleCitySelection(e.target.value)}>
-        <option value="">Select a city</option>
+      <select onChange={(e) => handleCitySelection(e.target.value)}>
+        <option >Select a city</option>
         {cities.map((city) => (
           <option key={city} value={city}>
             {city}
           </option>
         ))}
       </select>
-
-
-
-
       {selectedCity && (
         <p>You Selected {selectedCity}, {selectedState}, {selectedCountry}</p>
       )}

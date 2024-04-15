@@ -68,9 +68,8 @@ const Xstates = () => {
           </option>
         ))}
       </select>
-      {selectedCity && (
-        <p>You Selected {selectedCity}, {selectedState}, {selectedCountry}</p>
-      )}
+      {selectedCity && 
+        <p>You selected {selectedCity}, {selectedState}, {selectedCountry}</p> }
     </div>
   );
 };

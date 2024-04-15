@@ -2,62 +2,79 @@ import React, { useEffect, useState } from 'react';
 
  
 const Xstates = () => {
-    const [countries, setCountries] = useState([]);
-  const [states, setStates] = useState([]);
-  const [cities, setCities] = useState([]);
+
+  const [countries, setCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState('');
+  const [states, setStates] = useState([]);
   const [selectedState, setSelectedState] = useState('');
+  const [cities, setCities] = useState([]);
   const [selectedCity, setSelectedCity] = useState('');
 
   useEffect(() => {
     fetch('https://crio-location-selector.onrender.com/countries')
-      .then(response => response.json())
-      .then(data => setCountries(data));
+      .then((response) => response.json())
+      .then((data) => setCountries(data))
+      .catch((error) => console.error('Error fetching countries:', error));
   }, []);
 
-  const handleCountryChange = (country) => {
+  const handleCountrySelection = (country) => {
     setSelectedCountry(country);
     fetch(`https://crio-location-selector.onrender.com/country=${country}/states`)
-      .then(response => response.json())
-      .then(data => setStates(data));
+      .then((response) => response.json())
+      .then((data) => setStates(data))
+      .catch((error) => console.error('Error fetching states:', error));
   };
 
-  const handleStateChange = (state) => {
+  const handleStateSelection = (state) => {
     setSelectedState(state);
     fetch(`https://crio-location-selector.onrender.com/country=${selectedCountry}/state=${state}/cities`)
-      .then(response => response.json())
-      .then(data => setCities(data));
+      .then((response) => response.json())
+      .then((data) => setCities(data))
+      .catch((error) => console.error('Error fetching cities:', error));
   };
 
-  const handleCityChange = (city) => {
+  const handleCitySelection = (city) => {
     setSelectedCity(city);
   };
 
   return (
     <div>
-         <h1>Select Location</h1>   
-      <select onChange={(e) => handleCountryChange(e.target.value)}>
-        <option value="">Select Country</option>
-        {countries.map(country => (
-          <option key={country} value={country}>{country}</option>
+       <h1>Select Location</h1>
+      <select id="country" onChange={(e) => handleCountrySelection(e.target.value)}>
+        <option value="">Select a country</option>
+        {countries.map((country) => (
+          <option key={country} value={country}>
+            {country}
+          </option>
         ))}
       </select>
 
-      <select onChange={(e) => handleStateChange(e.target.value)} disabled={!selectedCountry}>
-        <option value="">Select State</option>
-        {states.map(state => (
-          <option key={state} value={state}>{state}</option>
+    
+      <select id="state" onChange={(e) => handleStateSelection(e.target.value)}>
+        <option value="">Select a state</option>
+        {states.map((state) => (
+          <option key={state} value={state}>
+            {state}
+          </option>
         ))}
       </select>
 
-      <select onChange={(e) => handleCityChange(e.target.value)} disabled={!selectedState}>
-        <option value="">Select City</option>
-        {cities.map(city => (
-          <option key={city} value={city}>{city}</option>
+      
+      <select id="city" onChange={(e) => handleCitySelection(e.target.value)}>
+        <option value="">Select a city</option>
+        {cities.map((city) => (
+          <option key={city} value={city}>
+            {city}
+          </option>
         ))}
       </select>
-      {selectedCity && <p>You selected {selectedCity}, {selectedState}, {selectedCountry}</p>}
 
+
+
+
+      {selectedCity && (
+        <p>You Selected {selectedCity}, {selectedState}, {selectedCountry}</p>
+      )}
     </div>
   );
 };
